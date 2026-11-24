@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf7ff">
+  <meta name="description" content="Условия в Python для задания №6 ОГЭ по информатике. Конспект, тренажёр и 9 задач с проверкой.">
+  <title>Условия в Python · ОГЭ по информатике №6</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip button" href="#main">Перейти к содержанию</a>
+  <header class="top" id="top">
+    <div class="shell topline">
+      <a class="brand" href="#top"><span class="brand-icon" aria-hidden="true">&gt;_</span> ИНФОРМАТИКА</a>
+      <nav aria-label="Разделы">
+        <a href="#notes">Конспект</a><a href="#practice">Тренажёр</a><a href="#homework">Домашка</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell" id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">ОГЭ · ЗАДАНИЕ №6</p>
+        <h1 id="hero-title">Условия<br>в Python</h1>
+        <p class="hero-text">Научись читать программы с <code>if</code> и <code>else</code>, а затем реши 9 задач с автопроверкой.</p>
+        <div class="actions">
+          <a class="button primary" href="#notes">Начать с конспекта</a>
+          <a class="button ghost" href="homework.pdf" download>Скачать ДЗ в PDF</a>
+        </div>
+      </div>
+      <div class="hero-demo">
+        <div class="demo-bar"><span>условие.py</span><span>Python</span></div>
+        <pre><code><span>if</span> s &gt; 4 <span>and</span> t &gt; 4:
+    print(<b>"YES"</b>)
+<span>else</span>:
+    print(<b>"NO"</b>)</code></pre>
+        <div class="demo-run"><span>Пара <code>(6, 7)</code></span><strong>YES</strong></div>
+      </div>
+    </section>
+
+    <section id="notes" class="section">
+      <h2>Короткий конспект</h2>
+      <p class="lead">Одна пара чисел — один запуск программы. Если условие после <code>if</code> истинно, выполняется первая ветка. Иначе выполняется <code>else</code>.</p>
+      <div class="rules">
+        <article><h3><code>and</code> <span>И</span></h3><p>Обе части должны быть истинны.</p><p class="rule-example"><code>6 &gt; 4 and 2 &gt; 4</code> <strong>ложь</strong></p></article>
+        <article><h3><code>or</code> <span>ИЛИ</span></h3><p>Достаточно хотя бы одной истинной части.</p><p class="rule-example"><code>6 &gt; 4 or 2 &gt; 4</code> <strong>истина</strong></p></article>
+        <article><h3><code>not</code> <span>НЕ</span></h3><p>Меняет истину на ложь и наоборот.</p><p class="rule-example"><code>not (6 &gt; 4)</code> <strong>ложь</strong></p></article>
+      </div>
+      <div class="note">
+        <h3>Проверь границу и скобки</h3>
+        <p>Строгие знаки <code>&lt;</code> и <code>&gt;</code> исключают равенство. <code>&lt;=</code> и <code>&gt;=</code> его включают. Поэтому <code>not (x &gt; 4)</code> означает <code>x &lt;= 4</code>.</p>
+        <p>Если <code>not</code> стоит перед целой скобкой, отрицай обе части и меняй связку. Например, <code>not (P and Q)</code> превращается в <code>(not P) or (not Q)</code>.</p>
+      </div>
+      <details class="parameter">
+        <summary>Как искать параметр A</summary>
+        <p>Для условия <code>(s &gt; 7) or (t &gt; A)</code> ветка <code>else</code> срабатывает при <code>s &lt;= 7</code> и <code>t &lt;= A</code>. Сначала отбрось пары с <code>s &gt; 7</code>, затем выпиши и отсортируй <code>t</code> у оставшихся пар.</p>
+        <p>Допустим, после отбора остались значения <code>−1, 2, 5, 6, 8</code>. Чтобы подходили ровно три пары, нужны <code>A ≥ 5</code> и <code>A &lt; 6</code>. Значит, <code>A = 5</code>. Повторяющиеся значения учитывай столько раз, сколько они встречаются.</p>
+      </details>
+    </section>
+
+    <section id="practice" class="section">
+      <h2>Тренажёр условий</h2>
+      <p class="lead">Выбери условие, подставь два целых числа и попробуй предсказать вывод.</p>
+      <form id="trainer" class="panel trainer">
+        <label>Условие
+          <select id="trainer-condition">
+            <option value="and">s &gt; 4 and t &gt; 4</option>
+            <option value="or">s &gt; 4 or t &gt; 4</option>
+            <option value="not">not (s &gt; 4) and t &gt;= 4</option>
+            <option value="group">not (s &gt; 4 and t &gt; 4)</option>
+          </select>
+        </label>
+        <div class="trainer-inputs">
+          <label>s<input id="trainer-s" type="number" step="1" value="4" required></label>
+          <label>t<input id="trainer-t" type="number" step="1" value="7" required></label>
+        </div>
+        <button class="button primary" type="submit">Запустить</button>
+        <output id="trainer-result" for="trainer-condition trainer-s trainer-t" aria-live="polite">Здесь появится вывод программы.</output>
+      </form>
+    </section>
+
+    <section id="example" class="section">
+      <h2>Разбор примера</h2>
+      <p class="lead">Сколько раз программа выведет <code>NO</code> для пар <code>(4, 0)</code>, <code>(5, 1)</code>, <code>(−1, 4)</code> и <code>(2, 3)</code>?</p>
+      <div class="panel example">
+        <pre class="code"><code>if (s &gt; 4) or (t &gt; 3):
+    print("YES")
+else:
+    print("NO")</code></pre>
+        <div>
+          <ol>
+            <li>Для <code>NO</code> обе части с <code>or</code> должны быть ложными.</li>
+            <li>Нужны <code>s &lt;= 4</code> и <code>t &lt;= 3</code> одновременно.</li>
+            <li>Подходят пары <code>(4, 0)</code> и <code>(2, 3)</code>.</li>
+          </ol>
+          <p class="example-result">Ответ · 2</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="homework" class="section">
+      <h2>Домашняя работа</h2>
+      <p class="lead">Реши все 9 задач и введи целые числа. После сдачи появятся результат и разборы. Ответы сохраняются в этом браузере.</p>
+      <div class="progress-panel">
+        <div><strong id="progress-label">Заполнено 0 из 9</strong><progress id="progress" value="0" max="9" aria-labelledby="progress-label"></progress></div>
+        <nav id="task-nav" aria-label="Переход к задаче"></nav>
+      </div>
+      <form id="homework-form" novalidate>
+        <div class="task-list">
+<article class="task" id="task-1">
+  <h3>Задача 1</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>s = int(input())
+k = int(input())
+if s &gt; 5 and k &gt; 5:
+    print(&quot;YES&quot;)
+else:
+    print(&quot;NO&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (s, k) по порядку:</p>
+    <div class="pairs"><span>(6, 8)</span><span>(9, 5)</span><span>(5, 9)</span><span>(8, 7)</span><span>(0, 9)</span><span>(11, 6)</span><span>(10, 10)</span><span>(−4, 4)</span><span>(5, 5)</span></div>
+    <p class="question">Сколько раз программа напечатает «YES»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-1">Ответ</label>
+    <input id="answer-1" name="answer-1" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 1" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 1</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-2">
+  <h3>Задача 2</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>s = int(input())
+t = int(input())
+if (s &gt; 8) or (t &gt; 8):
+    print(&quot;YES&quot;)
+else:
+    print(&quot;NO&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (s, t) по порядку:</p>
+    <div class="pairs"><span>(8, 8)</span><span>(9, 2)</span><span>(4, 11)</span><span>(12, 13)</span><span>(7, 6)</span><span>(−6, 9)</span><span>(9, 8)</span><span>(1, −3)</span><span>(8, 6)</span></div>
+    <p class="question">Сколько раз программа напечатает «YES»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-2">Ответ</label>
+    <input id="answer-2" name="answer-2" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 2" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 2</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-3">
+  <h3>Задача 3</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>s = int(input())
+k = int(input())
+if s &lt; 4 and k &lt; 4:
+    print(&quot;YES&quot;)
+else:
+    print(&quot;NO&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (s, k) по порядку:</p>
+    <div class="pairs"><span>(1, 3)</span><span>(5, 0)</span><span>(4, 4)</span><span>(−3, −2)</span><span>(2, 5)</span><span>(0, 0)</span><span>(6, 2)</span><span>(−2, 3)</span><span>(3, −1)</span></div>
+    <p class="question">Сколько раз программа напечатает «NO»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-3">Ответ</label>
+    <input id="answer-3" name="answer-3" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 3" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 3</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-4">
+  <h3>Задача 4</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>s = int(input())
+t = int(input())
+if not (s &gt; -3) or (t &lt; 4):
+    print(&quot;YES&quot;)
+else:
+    print(&quot;NO&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (s, t) по порядку:</p>
+    <div class="pairs"><span>(0, 3)</span><span>(−3, 6)</span><span>(−8, 1)</span><span>(4, 4)</span><span>(2, 7)</span><span>(−1, 0)</span><span>(5, 2)</span><span>(3, 4)</span><span>(−2, 8)</span></div>
+    <p class="question">Сколько раз программа напечатает «YES»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-4">Ответ</label>
+    <input id="answer-4" name="answer-4" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 4" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 4</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-5">
+  <h3>Задача 5</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>s = int(input())
+t = int(input())
+if (s &lt; 7) and not (t &lt; 0):
+    print(&quot;YES&quot;)
+else:
+    print(&quot;NO&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (s, t) по порядку:</p>
+    <div class="pairs"><span>(6, 0)</span><span>(7, 2)</span><span>(3, −1)</span><span>(−1, 2)</span><span>(1, 5)</span><span>(9, 4)</span><span>(5, −2)</span><span>(0, 0)</span><span>(−4, −3)</span></div>
+    <p class="question">Сколько раз программа напечатает «YES»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-5">Ответ</label>
+    <input id="answer-5" name="answer-5" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 5" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 5</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-6">
+  <h3>Задача 6</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>s = int(input())
+t = int(input())
+if not ((s &lt;= 1) and (t &lt; 5)):
+    print(&quot;YES&quot;)
+else:
+    print(&quot;NO&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (s, t) по порядку:</p>
+    <div class="pairs"><span>(1, 4)</span><span>(2, 3)</span><span>(0, 5)</span><span>(4, 7)</span><span>(−5, 2)</span><span>(0, −1)</span><span>(3, −2)</span><span>(1, 5)</span><span>(−2, 8)</span></div>
+    <p class="question">Сколько раз программа напечатает «YES»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-6">Ответ</label>
+    <input id="answer-6" name="answer-6" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 6" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 6</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-7">
+  <h3>Задача 7</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>x = int(input())
+y = int(input())
+if x &gt;= y:
+    print(&quot;x&quot;)
+else:
+    print(&quot;y&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (x, y) по порядку:</p>
+    <div class="pairs"><span>(3, 4)</span><span>(6, 6)</span><span>(−5, −2)</span><span>(8, 7)</span><span>(−2, −4)</span><span>(1, 3)</span><span>(0, 0)</span><span>(7, 9)</span><span>(2, −6)</span></div>
+    <p class="question">Сколько раз программа напечатает «x»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-7">Ответ</label>
+    <input id="answer-7" name="answer-7" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 7" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 7</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-8">
+  <h3>Задача 8</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>x = int(input())
+y = int(input())
+if y &gt; x * x:
+    print(&quot;x&quot;)
+else:
+    print(&quot;y&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (x, y) по порядку:</p>
+    <div class="pairs"><span>(−3, 10)</span><span>(2, 3)</span><span>(0, 4)</span><span>(4, 16)</span><span>(−2, 5)</span><span>(3, 8)</span><span>(1, 1)</span><span>(2, −2)</span><span>(−4, 15)</span></div>
+    <p class="question">Сколько раз программа напечатает «y»?</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-8">Ответ</label>
+    <input id="answer-8" name="answer-8" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 8" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 8</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+<article class="task" id="task-9">
+  <h3>Задача 9</h3>
+  <div class="ink-surface">
+    <pre class="code"><code>s = int(input())
+t = int(input())
+A = int(input())
+if (s &gt; 7) or (t &gt; A):
+    print(&quot;YES&quot;)
+else:
+    print(&quot;NO&quot;)</code></pre>
+    <p>Девять запусков. Входные пары (s, t) по порядку:</p>
+    <div class="pairs"><span>(2, 5)</span><span>(8, 0)</span><span>(7, 4)</span><span>(9, 9)</span><span>(−3, 0)</span><span>(5, 6)</span><span>(1, 7)</span><span>(4, −2)</span><span>(3, 10)</span></div>
+    <p class="question">Укажите целое значение A, при котором программа напечатает «NO» ровно 5 раз.</p>
+    <canvas class="ink-layer" aria-hidden="true"></canvas>
+  </div>
+  <details class="scratch">
+    <summary>Черновик и пометки</summary>
+    <div class="tools" role="group" aria-label="Инструменты черновика">
+      <button type="button" data-tool="pen" aria-pressed="false">Ручка</button>
+      <button type="button" data-tool="marker" aria-pressed="false">Маркер</button>
+      <button type="button" data-tool="erase" aria-pressed="false">Ластик</button>
+      <button type="button" data-tool="off" aria-pressed="true">Прокрутка</button>
+      <button type="button" data-undo>Отменить штрих</button>
+    </div>
+    <p class="ink-hint">Выбери инструмент, чтобы писать поверх условия или на клетках.</p>
+    <div class="ink-surface grid-paper"><canvas class="ink-layer" aria-hidden="true"></canvas></div>
+  </details>
+  <div class="answer-row">
+    <label for="answer-9">Ответ</label>
+    <input id="answer-9" name="answer-9" type="text" inputmode="numeric" maxlength="12"
+      autocomplete="off" aria-label="Ответ к задаче 9" placeholder="Целое число">
+    <span class="answer-status" aria-live="polite"></span>
+  </div>
+  <details class="solution" hidden>
+    <summary>Разбор задачи 9</summary><p></p><div class="run-review"></div>
+  </details>
+</article>
+        </div>
+        <div class="panel submit-panel" id="submit-panel">
+          <h3>Сдача работы</h3>
+          <button id="submit-button" type="submit" class="button primary">Сдать и проверить</button>
+          <p id="submit-message" role="status"></p>
+          <div id="result" hidden>
+            <p id="score" class="score" tabindex="-1"></p>
+            <p>Открой разборы под задачами. Скопируй результат и отправь его преподавателю.</p>
+            <button id="copy" class="button ghost" type="button">Скопировать результат</button>
+            <button id="edit" class="button ghost" type="button">Изменить ответы</button>
+            <p id="copy-status" role="status" hidden></p>
+            <textarea id="copy-fallback" aria-label="Результат для копирования" readonly hidden></textarea>
+          </div>
+        </div>
+      </form>
+      <noscript><p class="note">Для проверки ответов нужен JavaScript. Можно скачать PDF и решить задания на бумаге.</p></noscript>
+    </section>
+  </main>
+  <footer class="shell footer"><span>ОГЭ по информатике · Задание №6</span><a href="#top">К началу</a></footer>
+  <script type="application/json" id="task-data">[{"code": "s = int(input())\nk = int(input())\nif s > 5 and k > 5:\n    print(\"YES\")\nelse:\n    print(\"NO\")", "pairs": [[6, 8], [9, 5], [5, 9], [8, 7], [0, 9], [11, 6], [10, 10], [-4, 4], [5, 5]], "names": ["s", "k"], "question": "Сколько раз программа напечатает «YES»?", "answer": 4, "explanation": "Оба числа должны быть строго больше 5.", "rows": [1, 4, 6, 7]}, {"code": "s = int(input())\nt = int(input())\nif (s > 8) or (t > 8):\n    print(\"YES\")\nelse:\n    print(\"NO\")", "pairs": [[8, 8], [9, 2], [4, 11], [12, 13], [7, 6], [-6, 9], [9, 8], [1, -3], [8, 6]], "names": ["s", "t"], "question": "Сколько раз программа напечатает «YES»?", "answer": 5, "explanation": "Достаточно одного числа строго больше 8. Пара (12, 13) считается один раз.", "rows": [2, 3, 4, 6, 7]}, {"code": "s = int(input())\nk = int(input())\nif s \u003c 4 and k \u003c 4:\n    print(\"YES\")\nelse:\n    print(\"NO\")", "pairs": [[1, 3], [5, 0], [4, 4], [-3, -2], [2, 5], [0, 0], [6, 2], [-2, 3], [3, -1]], "names": ["s", "k"], "question": "Сколько раз программа напечатает «NO»?", "answer": 4, "explanation": "Ветка else срабатывает, если хотя бы одно число не меньше 4.", "rows": [2, 3, 5, 7]}, {"code": "s = int(input())\nt = int(input())\nif not (s > -3) or (t \u003c 4):\n    print(\"YES\")\nelse:\n    print(\"NO\")", "pairs": [[0, 3], [-3, 6], [-8, 1], [4, 4], [2, 7], [-1, 0], [5, 2], [3, 4], [-2, 8]], "names": ["s", "t"], "question": "Сколько раз программа напечатает «YES»?", "answer": 5, "explanation": "Отрицание not (s > -3) означает s ≤ −3. Для YES достаточно s ≤ −3 или t \u003c 4.", "rows": [1, 2, 3, 6, 7]}, {"code": "s = int(input())\nt = int(input())\nif (s \u003c 7) and not (t \u003c 0):\n    print(\"YES\")\nelse:\n    print(\"NO\")", "pairs": [[6, 0], [7, 2], [3, -1], [-1, 2], [1, 5], [9, 4], [5, -2], [0, 0], [-4, -3]], "names": ["s", "t"], "question": "Сколько раз программа напечатает «YES»?", "answer": 4, "explanation": "Отрицание not (t \u003c 0) означает t ≥ 0. Одновременно должно выполняться s \u003c 7.", "rows": [1, 4, 5, 8]}, {"code": "s = int(input())\nt = int(input())\nif not ((s \u003c= 1) and (t \u003c 5)):\n    print(\"YES\")\nelse:\n    print(\"NO\")", "pairs": [[1, 4], [2, 3], [0, 5], [4, 7], [-5, 2], [0, -1], [3, -2], [1, 5], [-2, 8]], "names": ["s", "t"], "question": "Сколько раз программа напечатает «YES»?", "answer": 6, "explanation": "Отрицаем обе части и меняем and на or. Для YES нужно s > 1 или t ≥ 5.", "rows": [2, 3, 4, 7, 8, 9]}, {"code": "x = int(input())\ny = int(input())\nif x >= y:\n    print(\"x\")\nelse:\n    print(\"y\")", "pairs": [[3, 4], [6, 6], [-5, -2], [8, 7], [-2, -4], [1, 3], [0, 0], [7, 9], [2, -6]], "names": ["x", "y"], "question": "Сколько раз программа напечатает «x»?", "answer": 5, "explanation": "Буква x печатается при x ≥ y. Равные пары тоже подходят, поскольку в условии стоит >=.", "rows": [2, 4, 5, 7, 9]}, {"code": "x = int(input())\ny = int(input())\nif y > x * x:\n    print(\"x\")\nelse:\n    print(\"y\")", "pairs": [[-3, 10], [2, 3], [0, 4], [4, 16], [-2, 5], [3, 8], [1, 1], [2, -2], [-4, 15]], "names": ["x", "y"], "question": "Сколько раз программа напечатает «y»?", "answer": 6, "explanation": "Буква y печатается в ветке else при y ≤ x². Для отрицательного x квадрат всё равно положительный.", "rows": [2, 4, 6, 7, 8, 9]}, {"code": "s = int(input())\nt = int(input())\nA = int(input())\nif (s > 7) or (t > A):\n    print(\"YES\")\nelse:\n    print(\"NO\")", "pairs": [[2, 5], [8, 0], [7, 4], [9, 9], [-3, 0], [5, 6], [1, 7], [4, -2], [3, 10]], "names": ["s", "t"], "question": "Укажите целое значение A, при котором программа напечатает «NO» ровно 5 раз.", "answer": 6, "explanation": "Для NO оба сравнения ложны, то есть s ≤ 7 и t ≤ A. Пары с s > 7 всегда дают YES. У оставшихся пар значения t по возрастанию равны −2, 0, 4, 5, 6, 7, 10. Для пяти ответов NO нужно включить 6 и исключить 7, то есть 6 ≤ A \u003c 7. Единственное целое значение — 6.", "rows": [1, 3, 5, 6, 8]}]</script>
+</body>
+</html>
