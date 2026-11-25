@@ -27,7 +27,7 @@ trainer.addEventListener("submit", (event) => {
   byId("trainer-result").textContent = `${value ? "YES" : "NO"}. ${explanation}.${grouping}`;
 });
 
-const key = "igor-exam-info6-homework-v1";
+const key = "igor-exam-info6-homework-v2";
 const tasks = JSON.parse(byId("task-data").textContent);
 const cards = [...document.querySelectorAll(".task")];
 const inputs = cards.map((card) => card.querySelector("input"));
@@ -83,7 +83,15 @@ function showReview() {
 }
 
 try {
-  const saved = JSON.parse(localStorage.getItem(key));
+  let saved = JSON.parse(localStorage.getItem(key));
+  if (saved === null) {
+    const previous = JSON.parse(localStorage.getItem("igor-exam-info6-homework-v1"));
+    if (Array.isArray(previous?.answers) && previous.answers.length === 9) {
+      // Task 3 was removed. Tasks 1, 2 and 4–9 carry their answers forward.
+      const previousAnswers = previous.answers.filter((_, index) => index !== 2);
+      saved = { answers: inputs.map((_, index) => previousAnswers[index] ?? ""), submitted: false };
+    }
+  }
   if (Array.isArray(saved?.answers) && saved.answers.length === tasks.length) {
     inputs.forEach((input, index) => {
       if (typeof saved.answers[index] === "string") input.value = saved.answers[index].slice(0, 12);

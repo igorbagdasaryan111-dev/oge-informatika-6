@@ -111,7 +111,7 @@ select {
   margin-bottom: 0; min-width: 0; padding: 13px 16px; border: 1px solid #dae8f5; border-radius: 13px;
   background: #eff7ff; color: #123e65; line-height: 1.48; font-size: .98rem; white-space: pre-wrap; overflow-wrap: anywhere;
 }
-.progress-panel { display: grid; grid-template-columns: minmax(140px, 1fr) auto; align-items: center; gap: 15px; padding: 16px 19px; margin-bottom: 16px; }
+.progress-panel { display: grid; grid-template-columns: minmax(140px, 1fr) minmax(0, auto); align-items: center; gap: 15px; padding: 16px 19px; margin-bottom: 16px; }
 progress { display: block; width: min(100%, 284px); height: 12px; accent-color: var(--blue); margin-top: 4px; }
 #task-nav { display: flex; gap: 5px; flex-wrap: wrap; }
 #task-nav a {
@@ -121,10 +121,11 @@ progress { display: block; width: min(100%, 284px); height: 12px; accent-color: 
 #task-nav a:hover { border-color: var(--blue); }
 #task-nav .filled { background: #e1efff; border-color: #a8caff; }
 .task-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.task-group + .task-group { margin-top: 30px; }
 .task {
   padding: clamp(15px, 3vw, 24px); display: flex; flex-direction: column; align-items: stretch;
 }
-.task h3 { color: var(--dark-blue); }
+.task h4 { margin: 0 0 10px; color: var(--dark-blue); line-height: 1.25; font-size: 1.25rem; }
 .ink-surface { position: relative; }
 .ink-surface p { margin: 13px 0 7px; }
 .ink-surface .question { font-weight: 750; margin-bottom: 14px; }
